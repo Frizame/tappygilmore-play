@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tappy Gilmore">
+    <meta name="theme-color" content="#14202c">
+    <title>TappyGilmore</title>
+    <link rel="icon" href="data:,">
+    <style>
+      /* The game fills the phone's screen, portrait; on a computer it's a phone-shaped window in the middle. */
+      :root {
+        --ink: #14202c;
+        --gold: #ffc83d;
+        --white: #ffffff;
+        --grass: #8fd14f;
+      }
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: var(--ink);
+        overflow: hidden;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+      }
+      body {
+        position: fixed;
+        inset: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: var(--white);
+      }
+      #game {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        height: 100%;
+        width: 100%;
+      }
+      @media (min-aspect-ratio: 3/4) {
+        /* A wide screen: a phone-shaped window. */
+        #game { width: auto; aspect-ratio: 9 / 19.5; max-width: 100%; }
+      }
+      #unity-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: var(--ink);
+        touch-action: none;
+        outline: none;
+      }
+      #loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        background: var(--ink);
+      }
+      #loading h1 {
+        margin: 0;
+        font-size: 44px;
+        line-height: 0.95;
+        text-align: center;
+        letter-spacing: 0.02em;
+        font-weight: 900;
+      }
+      #loading h1 span { display: block; color: var(--gold); }
+      #bar {
+        width: 60%;
+        max-width: 280px;
+        height: 12px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        overflow: hidden;
+      }
+      #fill { width: 0; height: 100%; background: var(--grass); transition: width 0.2s; }
+      #status { font-size: 14px; opacity: 0.75; text-align: center; padding: 0 24px; max-width: 420px; line-height: 1.4; }
+      #error { color: #ff9a8a; }
+      #upright {
+        display: none;
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        background: var(--ink);
+        font-size: 20px;
+        font-weight: 700;
+      }
+      @media (orientation: landscape) and (max-height: 500px) {
+        #upright { display: flex; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="loading">
+        <h1><span>TAPPY</span>GILMORE</h1>
+        <div id="bar"><div id="fill"></div></div>
+        <div id="status">Loading…</div>
+      </div>
+    </div>
+    <div id="upright">Turn your phone upright to play.</div>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
+      var statusLine = document.querySelector("#status");
+      var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      // Errors show on the page (some hosts block alert()).
+      function showBanner(message, type) {
+        if (type === "error") {
+          statusLine.id = "error";
+          statusLine.textContent = message;
+          document.querySelector("#loading").style.display = "flex";
+        }
+        console.log("[" + (type || "info") + "] " + message);
+      }
+
+      var buildUrl = "Build";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/8664f4e03aeee7325f3655c69ded75cd.data.unityweb",
+        frameworkUrl: buildUrl + "/5f6a58ecd849fd4bbd7f77f799c41d43.framework.js.unityweb",
+        codeUrl: buildUrl + "/7d9d20ee8b03b474c7c856e3b06332bb.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Frizame",
+        productName: "TappyGilmore",
+        productVersion: "0.1.0",
+        showBanner: showBanner,
+        // The course maker's courses stay in the browser between visits.
+        autoSyncPersistentDataPath: true,
+        // A phone's full resolution (3x) is a lot for a browser to draw: 2x looks the same and runs faster.
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, mobile ? 2 : 1.5),
+      };
+
+      var script = document.createElement("script");
+      script.src = buildUrl + "/23aae815eff90c98902da6461c079808.loader.js";
+      script.onload = function () {
+        createUnityInstance(canvas, config, function (progress) {
+          document.querySelector("#fill").style.width = Math.round(100 * progress) + "%";
+          statusLine.textContent = progress < 0.9 ? "Loading… " + Math.round(100 * progress) + "%" : "Starting…";
+        }).then(function () {
+          document.querySelector("#loading").style.display = "none";
+        }).catch(function (message) {
+          showBanner(String(message), "error");
+        });
+      };
+      script.onerror = function () {
+        showBanner("The game's files didn't load. Check the connection and reload.", "error");
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
