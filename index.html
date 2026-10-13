@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Tappy Gilmore">
     <meta name="theme-color" content="#14202c">
     <title>TappyGilmore</title>
@@ -128,9 +128,9 @@
       var buildUrl = "Build";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/7e562980d2fe24d982d12ae7a448be74.data.unityweb",
-        frameworkUrl: buildUrl + "/9c5aab3578b4151455fe6b42ab91f959.framework.js.unityweb",
-        codeUrl: buildUrl + "/818d4a7ca1149adcf28c1d2ff4e7de38.wasm.unityweb",
+        dataUrl: buildUrl + "/0da6e6993cdc38cdb7485ad40b0081a6.data.unityweb",
+        frameworkUrl: buildUrl + "/9708c0dc70cb7ff6962acdc218797865.framework.js.unityweb",
+        codeUrl: buildUrl + "/593136cf036d95a7d59b6bbeb31c2eab.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Frizame",
         productName: "TappyGilmore",
@@ -143,7 +143,7 @@
       };
 
       var script = document.createElement("script");
-      script.src = buildUrl + "/4c50be5e26d77d0779137dc86f83b379.loader.js";
+      script.src = buildUrl + "/dcc1ea3a22508d92e1b36ebc723e2037.loader.js";
       script.onload = function () {
         createUnityInstance(canvas, config, function (progress) {
           document.querySelector("#fill").style.width = Math.round(100 * progress) + "%";
