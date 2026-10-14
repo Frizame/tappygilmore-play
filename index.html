@@ -34,11 +34,15 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: var(--white);
       }
+      /* Below the status bar: where the phone draws the page under a see-through one (Safari, and the Home Screen on
+         newer iOS, whatever the status bar style says), the clock and battery would sit on the HUD's top bar. The
+         status bar's band is ink. Elsewhere the inset is 0. */
       #game {
         position: absolute;
         inset: 0;
+        top: env(safe-area-inset-top, 0px);
         margin: auto;
-        height: 100%;
+        height: calc(100% - env(safe-area-inset-top, 0px));
         width: 100%;
       }
       @media (min-aspect-ratio: 3/4) {
@@ -128,9 +132,9 @@
       var buildUrl = "Build";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/e5f1dbefa6f00499fd16a7a23cfe9bf8.data.unityweb",
-        frameworkUrl: buildUrl + "/d08aa78364a2b15f9a92cf156bbd39de.framework.js.unityweb",
-        codeUrl: buildUrl + "/e4a28bf0f22d83f8e81e4dbb9a6c7a2f.wasm.unityweb",
+        dataUrl: buildUrl + "/d9b7e52fe899e3f8141ee84f1548cd7b.data.unityweb",
+        frameworkUrl: buildUrl + "/36b1b00aa1d499b1c4beeae6f2efa13c.framework.js.unityweb",
+        codeUrl: buildUrl + "/2b4576dd9adb9687b7b645061f902478.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Frizame",
         productName: "TappyGilmore",
@@ -143,7 +147,7 @@
       };
 
       var script = document.createElement("script");
-      script.src = buildUrl + "/f69c0c96a23f86e2c14fb6d1e404cb38.loader.js";
+      script.src = buildUrl + "/6d915de6f53b09336fce130d16b7d25a.loader.js";
       script.onload = function () {
         createUnityInstance(canvas, config, function (progress) {
           document.querySelector("#fill").style.width = Math.round(100 * progress) + "%";
