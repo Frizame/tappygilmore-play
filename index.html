@@ -132,9 +132,9 @@
       var buildUrl = "Build";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/00794e50192391610a025cb6243fb30c.data.unityweb",
-        frameworkUrl: buildUrl + "/59f781fde10dd61057e45939c7775928.framework.js.unityweb",
-        codeUrl: buildUrl + "/4efb3f9ebb3e6a497d0ed4f1901418ac.wasm.unityweb",
+        dataUrl: buildUrl + "/b158bd562d2e26efb3282b8e9c44ccd5.data.unityweb",
+        frameworkUrl: buildUrl + "/a027db591967d9b7b491d553cca84dba.framework.js.unityweb",
+        codeUrl: buildUrl + "/0da29a31321945b8197951a37a15a2b4.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Frizame",
         productName: "TappyGilmore",
@@ -147,7 +147,7 @@
       };
 
       var script = document.createElement("script");
-      script.src = buildUrl + "/5b1cf592ea55c4ca5d47a50047da7756.loader.js";
+      script.src = buildUrl + "/f4de5af4eb686474ba5bfdb2616c9575.loader.js";
       script.onload = function () {
         createUnityInstance(canvas, config, function (progress) {
           document.querySelector("#fill").style.width = Math.round(100 * progress) + "%";
